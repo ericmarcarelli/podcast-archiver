@@ -16,14 +16,14 @@ foreach($config['podcasts'] as $podcast) {
     mkdir($downloadDir, 0777, true);
   }
 
-  foreach ($feed->get_items() as $item) {
+  foreach($feed->get_items() as $item) {
     $enclosure = $item->get_enclosure(0);
     if (!empty($enclosure)) {
       $parts = parse_url($enclosure->get_link());
       $filename = basename($parts["path"]);
-      print $filename . "\r\n";
 
       if (!file_exists($downloadDir . $filename)) {
+        print 'Downloading: ' . $enclosure->get_link() . "\r\n";
         file_put_contents($downloadDir . $filename, file_get_contents($enclosure->get_link()));
       }
     }
