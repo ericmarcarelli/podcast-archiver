@@ -16,7 +16,11 @@ foreach($config['podcasts'] as $podcast) {
     mkdir($downloadDir, 0777, true);
   }
 
-  foreach($feed->get_items() as $item) {
+  foreach($feed->get_items() as $k=>$item) {
+    if (!empty($config['max_per_feed']) && $k >= $config['max_per_feed']) {
+      break;
+    }
+
     $enclosure = $item->get_enclosure(0);
     if (!empty($enclosure)) {
       $parts = parse_url($enclosure->get_link());
